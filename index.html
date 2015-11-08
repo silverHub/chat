@@ -5,87 +5,16 @@
     <link rel="stylesheet" type="text/css" href="/main.css">
   </head>
   <body>
+  <div id="container">
     <ul id="messages"></ul>
       <span id="userTypingMsg"></span>
-    <form action="">
-      <input id="typeIn" autocomplete="off" /><button>Send</button>
-    </form>
+  </div>
+  <form action="">
+    <input id="typeIn" autocomplete="off" /><button>Send</button>
+  </form>
 
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-
-  var $typeIn =$('#typeIn');
-  $typeIn.focus();
-  var $userTypeingMsg = $('#userTypingMsg');
-  $userTypeingMsg.hide();
-  var socket = io();
-  var nick = getNick();
-
-  function getNick(){
-    var array = location.pathname.split('/').reverse();
-    return array[0];
-  }
-  function isNick(){
-    return !!getNick();
-  }
-
-
-
-  if(isNick()){
-    socket.emit('connectionWithNick', getNick());
-  }
-
-  $(window).unload(function(){
-    if(isNick()){
-      socket.emit('disconnectionWithNick', getNick());
-    }
-  });
-
-  $typeIn.on('keydown',function keyDownHandler(){
-    socket.emit('userTyping', nick);
-  });
-
-
-  $('form').submit(function(e){
-    e.preventDefault();
-    socket.emit('chat message', $typeIn.val());
-    $typeIn.val('');
-  });
-
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-  });
-
-  var timeoutId;
-
-  socket.on('show.userTyping', function(nick){
-    $userTypeingMsg.html(nick + ' is typing now...').show();
-    console.log('show.userTyping');
-
-    if(timeoutId){
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(function(){
-        $userTypeingMsg.hide();
-      },600);
-    } else {
-     timeoutId = setTimeout(function(){
-       $userTypeingMsg.hide();
-     },600);
-    }
-  });
-
-  socket.on('connectionWithNick', function(nick){
-    $('#messages').append($('<li class="connection">').text( nick + ' just now connected...'));
-  });
-
-
-  socket.on('player disconnected', function(msg) {
-	   //alert("Player "+msg+" has been disconnected.");
-  });
-  socket.on('player connected', function(msg) {
-	   //alert("Player "+msg+" connected.");
-  });
-</script>
+<script src="/client.js"></script>
   </body>
 </html>
