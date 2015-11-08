@@ -46,6 +46,11 @@ io.on('connection', function(socket){
     io.emit('chat message', nick, msg);
   });
 
+  socket.on('users', function(){
+console.log('users');
+    io.emit('users', users);
+  });
+
 });
 
 http.listen(3000, function(){

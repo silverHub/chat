@@ -4,6 +4,7 @@ $(function(){
 
   var socket = io();  // connection to the server
   var messageBoard = MessageBoard();
+  var onlineUsers = OnlineUsers();
   var $typeIn = $('#typeIn');
   var $userTypeingMsg = $('#userTypingMsg');
   var $form = $('form');
@@ -15,6 +16,7 @@ $(function(){
     if(isNick()){
       socket.emit('connectionWithNick', getNick());
     }
+    socket.emit('users');
   })();
 
 
@@ -28,11 +30,17 @@ $(function(){
   }
 
   // event handlers
+
+  socket.on('users', function(users){
+    onlineUsers.addUsers(users);
+  });
   socket.on('connectionWithNick', function(nick){
     messageBoard.addSystemMsg(nick, 'ENTER');
+    onlineUsers.addUser(nick);
   });
   socket.on('disconnectionWithNick', function(nick){
     messageBoard.addSystemMsg(nick, 'LEAVE');
+    onlineUsers.removeUser(nick);
   });
 
   $(window).unload(function(){

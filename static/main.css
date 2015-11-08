@@ -12,3 +12,21 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #userTypingMsg {
     color: lightgrey;
 }
+
+
+#whoIsOnline {
+    position: fixed;
+    right: 0;
+    width: 200px;
+    padding: 10px;
+    top: 100px;
+    background-color: cornsilk;
+}
+#whoIsOnline ul {
+    list-style: none;
+}
+#whoIsOnline ul li {
+    height: 20px;
+    padding: 2px;
+    
+}
