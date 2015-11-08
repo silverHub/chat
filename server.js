@@ -30,6 +30,10 @@ io.on('connection', function(socket){
      delete users[nick];
   });
 
+  socket.on('userTyping', function(nick){
+	   io.emit('show.userTyping', nick);
+  });
+
 
   socket.on('disconnect', function(){
 	   io.emit('player disconnected', '');

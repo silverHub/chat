@@ -6,6 +6,7 @@
   </head>
   <body>
     <ul id="messages"></ul>
+      <span id="userTypingMsg"></span>
     <form action="">
       <input id="typeIn" autocomplete="off" /><button>Send</button>
     </form>
@@ -15,7 +16,11 @@
 <script>
 
   var $typeIn =$('#typeIn');
+  $typeIn.focus();
+  var $userTypeingMsg = $('#userTypingMsg');
+  $userTypeingMsg.hide();
   var socket = io();
+  var nick = getNick();
 
   function getNick(){
     var array = location.pathname.split('/').reverse();
@@ -24,6 +29,8 @@
   function isNick(){
     return !!getNick();
   }
+
+
 
   if(isNick()){
     socket.emit('connectionWithNick', getNick());
@@ -35,13 +42,37 @@
     }
   });
 
+  $typeIn.on('keydown',function keyDownHandler(){
+    socket.emit('userTyping', nick);
+  });
+
+
   $('form').submit(function(e){
     e.preventDefault();
     socket.emit('chat message', $typeIn.val());
+    $typeIn.val('');
   });
 
   socket.on('chat message', function(msg){
     $('#messages').append($('<li>').text(msg));
+  });
+
+  var timeoutId;
+
+  socket.on('show.userTyping', function(nick){
+    $userTypeingMsg.html(nick + ' is typing now...').show();
+    console.log('show.userTyping');
+
+    if(timeoutId){
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(function(){
+        $userTypeingMsg.hide();
+      },600);
+    } else {
+     timeoutId = setTimeout(function(){
+       $userTypeingMsg.hide();
+     },600);
+    }
   });
 
   socket.on('connectionWithNick', function(nick){
@@ -56,7 +87,5 @@
 	   //alert("Player "+msg+" connected.");
   });
 </script>
-
-
   </body>
 </html>
