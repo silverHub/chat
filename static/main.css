@@ -6,7 +6,8 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #container{padding-left: 15px; margin: 0;}
 #messages { list-style-type: none; margin: 0; padding: 0}
 #messages li { padding: 5px 10px; }
-#messages li.connection { color: red; }
+#messages li.systemMsg { color: red; }
+#messages li.msg { color: black; }
 #messages li:nth-child(odd) { background: #eee; }
 #userTypingMsg {
     color: lightgrey;

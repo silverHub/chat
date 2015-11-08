@@ -8,24 +8,33 @@ var users = [];
 
 app.use(express.static('static'));
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
+// No anonim chat
+// app.get('/', function(req, res){
+//   res.sendFile(__dirname + '/index.html');
+// });
 
 app.get('/nick/:nickname', function(req, res){
+  // validate nickname
+  if (!req.params.nickname){
+    return 'Error: nickname missing';
+  }
   res.sendFile(__dirname + '/index.html');
 });
 
 
 io.on('connection', function(socket){
+  var emit = socket.broadcast.emit;
+  io.on('connection', function(socket){
+    socket.broadcast.emit('hi');
+  });
 
   socket.on('connectionWithNick', function(nick){
-	   io.emit('chat message', nick+ ' just now connected...');
+	   io.emit('connectionWithNick', nick);
      users.push(nick);
   });
 
   socket.on('disconnectionWithNick', function(nick){
-	   io.emit('chat message', nick+ ' has left the chat...');
+	   io.emit('disconnectionWithNick', nick);
      delete users[nick];
   });
 
@@ -33,14 +42,8 @@ io.on('connection', function(socket){
 	   io.emit('show.userTyping', nick);
   });
 
-
-  socket.on('disconnect', function(){
-	   io.emit('player disconnected', '');
-
-  });
-
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('chat message', function(nick, msg){
+    io.emit('chat message', nick, msg);
   });
 
 });
