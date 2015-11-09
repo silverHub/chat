@@ -7,14 +7,18 @@ function OnlineUsers(){
 
 
   function addUser(user){
+    console.log('addUser:', user);
     $user.clone().addClass(user).html(user).appendTo($users);
   }
   function addUsers(users){
+    console.log('addUsers:', users);
     if(!users){ return; }
+    $users.empty();
     users.forEach(addUser);
   }
 
   function removeUser(user){
+    console.log('removeUser:', user);
     $users.find('li.'+user).remove();
   }
 

@@ -4,7 +4,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var users = [];
-
+Array.prototype.contains = function(element){
+    return this.indexOf(element) > -1;
+};
 
 app.use(express.static('static'));
 
@@ -17,8 +19,11 @@ app.get('/nick/:nickname', function(req, res){
   // validate nickname
   if (!req.params.nickname){
     return 'Error: nickname missing';
+  } else if(users.contains(req.params.nickname)){
+    res.send('Sorry, required user name: ' +req.params.nickname+ ' is already taken.' );
+  } else {
+    res.sendFile(__dirname + '/index.html');
   }
-  res.sendFile(__dirname + '/index.html');
 });
 
 
@@ -47,10 +52,12 @@ io.on('connection', function(socket){
   });
 
   socket.on('users', function(){
-console.log('users');
     io.emit('users', users);
   });
 
+  socket.on('removeUsers', function(){
+    users = [];
+  });
 });
 
 http.listen(3000, function(){

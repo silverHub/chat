@@ -6,6 +6,7 @@ $(function(){
   var messageBoard = MessageBoard();
   var onlineUsers = OnlineUsers();
   var $typeIn = $('#typeIn');
+  var $removeAll = $('#removeAll');
   var $userTypeingMsg = $('#userTypingMsg');
   var $form = $('form');
   var nick = getNick();
@@ -13,8 +14,8 @@ $(function(){
   (function start(){
     $userTypeingMsg.hide();
     $typeIn.focus();
-    if(isNick()){
-      socket.emit('connectionWithNick', getNick());
+    if(nick){
+      socket.emit('connectionWithNick', nick);
     }
     socket.emit('users');
   })();
@@ -25,9 +26,6 @@ $(function(){
     var array = location.pathname.split('/').reverse();
     return array[0];
   }
-  function isNick(){
-    return !!getNick();
-  }
 
   // event handlers
 
@@ -36,7 +34,7 @@ $(function(){
   });
   socket.on('connectionWithNick', function(nick){
     messageBoard.addSystemMsg(nick, 'ENTER');
-    onlineUsers.addUser(nick);
+    //onlineUsers.addUser(nick);
   });
   socket.on('disconnectionWithNick', function(nick){
     messageBoard.addSystemMsg(nick, 'LEAVE');
@@ -55,6 +53,10 @@ $(function(){
 
   $typeIn.on('keydown',function keyDownHandler(){
     socket.emit('userTyping', nick);
+  });
+  $removeAll.on('click',function clickHandler(){
+    socket.emit('removeUsers');
+    socket.emit('users');
   });
 
   $form.submit(function(e){
