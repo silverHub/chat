@@ -1,4 +1,4 @@
-It's a hobby project to get familiar with Socket.io.
+Hobby project to get familiar with Socket.io.
 
 An example chat application with (almost) all the features listed on Socket.io getting started pages:
 - [x] Broadcast a message to connected users when someone connects or disconnects
