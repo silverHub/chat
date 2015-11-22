@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
 
 var users = [];
 
@@ -62,6 +63,6 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+server.listen(port, function(){
+  console.log('listening on *:', port);
 });

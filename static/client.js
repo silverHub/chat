@@ -33,7 +33,6 @@ $(function(){
   });
 
   $(window).unload(function(){
-      console.log('window unload: disconnection');
       socket.emit('disconnectionWithNick', nick);
   });
 

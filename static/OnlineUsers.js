@@ -10,7 +10,6 @@ function OnlineUsers(socket){
   });
 
   socket.on('disconnectionWithNick', function(user){
-    console.log('remove user:', user);
     removeUser(user);
   });
 
@@ -25,19 +24,11 @@ function OnlineUsers(socket){
   function addUsers(users){
     if(!users){ return; }
     $users.empty();
-    console.log(users);
     users.forEach(addUser);
   }
 
   function removeUser(user){
     $users.find('li.'+user).remove();
   }
-
-
- // return {
- //   addUser : addUser,
- //   addUsers : addUsers,
- //   removeUser: removeUser
- // };
 
 }
