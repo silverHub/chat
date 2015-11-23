@@ -1,3 +1,4 @@
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font: 13px Helvetica, Arial}
 form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
@@ -16,6 +17,27 @@ nav{
 #messages li:nth-child(odd) { background: #eee; }
 #userTypingMsg {
     color: lightgrey;
+}
+
+#splash {
+  color: white;
+  background-color: black;
+}
+#splash div{
+  margin: auto;
+  width: 50%;
+  margin-top: 80px;
+}
+#splash input{
+  margin-top: 5px;
+  font-size: 80px;
+  color: yellow;
+  background-color: black;
+  display: block;
+  outline: none;
+  border: none;
+  width: 400px;
+  line-height: 40px;
 }
 
 

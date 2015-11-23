@@ -30,7 +30,10 @@ function MessageBoard(socket, nick){
   });
 
   $form.submit(function(e){
-    addUserMsg(nick,$typeIn.val());
+    var msg = $typeIn.val().trim();
+    if(msg){
+      addUserMsg(nick,msg);
+    }
   });
 
   function addUserMsg(nick, msg){

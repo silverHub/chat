@@ -28,8 +28,11 @@ $(function(){
   // event handlers
   $form.submit(function(e){
     e.preventDefault();
-    socket.emit('chat message', nick, $typeIn.val());
-    $typeIn.val('');
+    var msg = $typeIn.val().trim();
+    if(msg){
+      socket.emit('chat message', nick, msg);
+      $typeIn.val('');
+    }
   });
 
   $(window).unload(function(){

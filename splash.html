@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Example chat application</title>
+    <link rel="stylesheet" type="text/css" href="/main.css">
+  </head>
+  <body id="splash">
+    <div>
+      <h2> Choose a nickname: </h2>
+      <input id="nick" type="text" />
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+
+      $(function(){
+        $('#nick').focus();
+        $('#nick').on('keydown',function(e){
+          if(e.which === 13){
+            location.replace('nick/'+ $('#nick').val());
+          }
+        })
+      });
+    </script>
+  </body>
+</html>

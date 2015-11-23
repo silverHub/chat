@@ -22,6 +22,11 @@ function broadcastUsers(){
 app.use(express.static('static'));
 
 // No anonim chat
+app.get('/', function(req, res){
+  // validate nickname
+  res.sendFile(__dirname + '/splash.html');
+});
+
 app.get('/nick/:nickname', function(req, res){
   // validate nickname
   if (!req.params.nickname){
