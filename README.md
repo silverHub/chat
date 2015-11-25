@@ -21,4 +21,4 @@ http://socket.io/get-started/chat/
 **Server**
 * NodeJs
 
-Deployed to Heroku (https://obscure-tundra-1211.herokuapp.com/nick/Tom)
+
